@@ -14,7 +14,7 @@ _house = nearestObject [position player, "House_F"];
 _owner = _container getVariable ["owner", ""];
 
 if(_owner == "") exitWith {
-	_handle = [] spawn SOCK_fnc_sessionUpdate;
+	_handle = [] spawn SOCK_fnc_updateRequest;
 };
 // quick'n dirty
 if(_owner != getPlayerUID _unit && side _unit != west) exitWith {
@@ -60,7 +60,7 @@ if(_owner != getPlayerUID _unit && side _unit != west) exitWith {
 	};
 	//waitUntil {!(isNull (findDisplay 602))};
 	_gearDisplay closeDisplay 0;
-	_handle = [] spawn SOCK_fnc_sessionUpdate;
+	_handle = [] spawn SOCK_fnc_updateRequest;
 };
 
 if(typeOf _container == "B_supplyCrate_F") then {
@@ -78,4 +78,4 @@ if(typeOf _container == "B_supplyCrate_F") then {
 
 	[[_house, [_wc, _mc, _ic, _bc]],"BRUUUDIS_fnc_updateHouseWeaponStorage",false,false] spawn life_fnc_MP;
 };
-_handle = [] spawn SOCK_fnc_sessionUpdate;
+_handle = [] spawn SOCK_fnc_updateRequest;
