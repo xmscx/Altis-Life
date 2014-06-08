@@ -44,6 +44,9 @@ while {true} do {
 
 missionNamespace setVariable[format["QUERY_%1",_uid],nil]; //Unset the variable.
 
+if(typeName _queryResult == "ARRAY") then {
+	diag_log format["got mission namespace variable: %1 Result: %2",_uid,_queryResult];
+};
 if(typeName _queryResult == "STRING") exitWith {
 	[[],"SOCK_fnc_insertPlayerInfo",_ownerID,false,true] spawn life_fnc_MP;
 };
@@ -63,6 +66,7 @@ for "_i" from 0 to (count _old)-1 do
 };
 
 _queryResult set[6,_old];
+
 //Parse data for specific side.
 switch (_side) do {
 	case west: {
@@ -79,6 +83,7 @@ switch (_side) do {
 };
 
 _ret = [];
+_queryGangResult = [];
 switch (_side) do {
 	case civilian: {
 		//compile our query request
@@ -120,8 +125,11 @@ switch (_side) do {
 				//_ret set[_i, _new];
 				_i = _i + 1;
 			}forEach (_queryHousingResult);
-		};	
+		};
+		_queryResult set[9, _ret];
 	};
 };
-_queryResult set [9, _ret];
+
+//* diag_log format["got Player Housing Information: Return: %1",_ret];
+//* diag_log format["Returning Player Information: %1", _queryResult];
 [_queryResult,"SOCK_fnc_requestReceived",_ownerID,false] spawn life_fnc_MP;
