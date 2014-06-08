@@ -14,7 +14,7 @@ _house = nearestObject [position player, "House_F"];
 _owner = _container getVariable ["owner", ""];
 
 if(_owner == "") exitWith {
-	_handle = [] spawn life_fnc_sessionUpdate;
+	_handle = [] spawn SOCK_fnc_sessionUpdate;
 };
 // quick'n dirty
 if(_owner != getPlayerUID _unit && side _unit != west) exitWith {
