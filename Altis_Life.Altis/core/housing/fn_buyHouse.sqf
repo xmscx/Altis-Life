@@ -28,7 +28,7 @@ _house setVariable["containers", [], true];
 _house setVariable["life_locked", 1, true];
 _house setVariable["storage_locked", 1, true];
 _house setVariable["Trunk", [], true];
-_house setVariable["life_homeOwnerName", [], true];
+_house setVariable["life_homeOwnerName", [name player], true];
 ["atm","take",_price] call life_fnc_updateCash;
 titleText[format["You have purchased %1 for %2!", _buildingName, [_price] call life_fnc_numberText],"PLAIN"];
 
