@@ -122,6 +122,7 @@ class CfgFunctions
             class deleteHouse {};
             class insertHouse {};
             class queryHouses {};
+			class queryPlayerHouses {};
             class updateHouseStorage {};
             class updateHouseWeaponStorage {};
         };
