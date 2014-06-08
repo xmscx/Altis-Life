@@ -44,9 +44,6 @@ while {true} do {
 
 missionNamespace setVariable[format["QUERY_%1",_uid],nil]; //Unset the variable.
 
-if(typeName _queryResult == "ARRAY") then {
-	diag_log format["got mission namespace variable: %1 Result: %2",_uid,_queryResult];
-};
 if(typeName _queryResult == "STRING") exitWith {
 	[[],"SOCK_fnc_insertPlayerInfo",_ownerID,false,true] spawn life_fnc_MP;
 };
