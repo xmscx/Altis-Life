@@ -30,12 +30,14 @@ if(getPlayerUID player == _ownerID) then
 		life_gang_list set[_index,[_name,_group,_locked,str(_new_owner),(getPlayerUID _new_owner)]];
 		publicVariable "life_gang_list";
 		[[_new_owner,_group], "clientGangLeader",_new_owner,false] spawn life_fnc_MP;
+		[[getPlayerUID _new_owner,_name], "MSC_fnc_updateGangLeader",false,false] spawn life_fnc_MP;
 	}
 		else
 	{
 		life_gang_list set [_index,-1];
 		life_gang_list = life_gang_list - [-1];
 		publicVariable "life_gang_list";
+		[[_name], "MSC_fnc_removeGang",false,false] spawn life_fnc_MP;
 	};
 };
 
@@ -45,6 +47,7 @@ if(rank player != "PRIVATE") then
 	player setRank "PRIVATE";
 };
 [player] joinSilent (createGroup civilian);
+[[getPlayerUID player, _name],"MSC_fnc_removeGangPlayer",false,false] spawn life_fnc_MP;
 hint "You have left your gang.";
 
 

@@ -41,5 +41,5 @@ switch (true) do
 	};
 };
 [[_data,_group], "clientGangKick",_data,false] spawn life_fnc_MP;
-
+[[getPlayerUID _data, _name],"MSC_fnc_removeGangPlayer",false,false] spawn life_fnc_MP;
 [false] spawn life_fnc_gangManagement;

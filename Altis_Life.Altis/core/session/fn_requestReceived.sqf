@@ -65,5 +65,72 @@ switch (playerSide) do
     };
 };
 
+switch (playerSide) do
+{
+	case civilian:
+	{
+		// Fetch Global Gang list
+		life_gang_list = missionNamespace getVariable "life_gang_list";
+		// Get Players Gang Result
+		_gangresult = _this select 10;
+		_leer = [];
+		diag_log format["Gangresult: %1",_gangresult];
+		if(typeName _gangresult == "STRING") then
+		{
+			diag_log "No Gangs for player in Database. 1";
+		}
+		else
+		{
+			_gangid = (_gangresult select 1); 
+			if(isNil "_gangid") then
+			{
+				diag_log "No Gangs for player in Database. 2";
+			}
+				else
+			{
+				_gangname = (_gangresult select 2);
+				_locked = (_gangresult select 3);
+				_rank = (_gangresult select 4);
+				if (_locked == "false") then {
+					_lockedbool = false;
+				} else {
+					_lockedbool = true;
+				};
+				diag_log format ["Found Gang: %1 - locked: %2 - %3 - %4",_gangname, _locked, typeName _locked, _lockedbool];
+				// Join da Group
+				diag_log "Get Group id from life_gang_list";
+				_index = [_gangname,life_gang_list] call fnc_index;
+				if(_index == -1) then {
+					diag_log "Gang could not be found in Global Gang list... exit";
+				}
+				else
+				{
+					_gang = life_gang_list select _index;
+					_group = _gang select 1;
+					_strplayer = _gang select 3;
+					_leaderid = _gang select 4;
+					if (isNull _group) then {
+						diag_log "Couldn't find Group for that gang, creating new";
+						_group = createGroup civilian;
+					};
+					diag_log "Joining Group";
+					[player] join _group;
+					life_my_gang = _group;
+					diag_log format["You have joined the gang: %1",_gang select 0];
+					if (_rank == "7") then {
+						_leaderid = getPlayerUID player;
+						group player selectLeader player;
+						player setRank "COLONEL";
+						_strplayer = str(player);
+					};
+
+					life_gang_list = [life_gang_list, _index] call BIS_fnc_removeIndex;
+					life_gang_list set[count life_gang_list,[_gangname,_group,_lockedbool,_strplayer,_leaderid]];
+					publicVariable "life_gang_list";
+				};	
+			};
+		};
+	};
+};
 
 life_session_completed = true;

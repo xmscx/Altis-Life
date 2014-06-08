@@ -5,7 +5,7 @@
 	Description:
 	Functionality meant for creating gangs.
 */
-private["_value","_len","_group"];
+private["_value","_len","_group","_uid"];
 _value = ctrlText 2522;
 _len = [_value] call KRON_StrLen;
 
@@ -29,3 +29,6 @@ if(!isNull life_my_gang) then
 	createDialog "Life_My_Gang_Diag";
 	publicVariable "life_gang_list";
 };
+//* Create the gang in the Database:
+_uid = getPlayerUID player;
+[[_value, _uid],"MSC_fnc_insertGang",false,false] spawn life_fnc_MP;
