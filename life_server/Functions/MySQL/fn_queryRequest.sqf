@@ -10,7 +10,7 @@
 	ARRAY - If array has 0 elements it should be handled as an error in client-side files.
 	STRING - The request had invalid handles or an unknown error and is logged to the RPT.
 */
-private["_uid","_side","_query","_return","_queryResult","_qResult","_handler","_thread"];
+private["_uid","_side","_query","_return","_queryResult","_qResult","_handler","_thread","_handlerhousing","_queryHousingResult"];
 _uid = [_this,0,"",[""]] call BIS_fnc_param;
 _side = [_this,1,sideUnknown,[civilian]] call BIS_fnc_param;
 _ownerID = [_this,2,ObjNull,[ObjNull]] call BIS_fnc_param;
@@ -78,4 +78,50 @@ switch (_side) do {
 	};
 };
 
+_ret = [];
+switch (_side) do {
+	case civilian: {
+		//compile our query request
+		_query = format["SELECT houses.position, houses.storage, houses.weapon_storage FROM houses WHERE pid='%1'",_uid];
+		waitUntil{!DB_Async_Active};
+
+		_handlerhousing = {
+			private["_thread"];
+			_thread = [_this select 0,true,_this select 1,false] spawn DB_fnc_asyncCall;
+			waitUntil {scriptDone _thread};
+		};
+		
+		while {true} do {
+			_thread = [_query,_uid] spawn _handlerhousing;
+			waitUntil {scriptDone _thread};
+			sleep 0.2;
+			_queryHousingResult = missionNamespace getVariable format["QUERY_%1", _uid];
+			if(!isNil "_queryHousingResult") exitWith {};
+		};
+		missionNamespace setVariable[format["QUERY_%1",_uid],nil];
+		if(typeName _queryHousingResult == "ARRAY") then {
+			
+			// Parse Housing Data:
+			_i = 0;
+			{	
+				_new = [(_x select 0)] call DB_fnc_mresToArray;
+				if(typeName _new == "STRING") then {_new = call compile format["%1", _new];};
+				//diag_log format ["pos : %1 (%2)", _new, typeName _new];
+				
+				_storage = [(_x select 1)] call DB_fnc_mresToArray;
+				if(typeName _storage == "STRING") then {_storage = call compile format["%1", _storage];};
+				//diag_log format ["storage : %1 (%2)", _storage, typeName _storage];
+				
+				_weaponStorage = [(_x select 2)] call DB_fnc_mresToArray;
+				if(typeName _weaponStorage == "STRING") then {_weaponStorage = call compile format["%1", _weaponStorage];};
+				//diag_log format ["_weaponStorage : %1 (%2)", _weaponStorage, typeName _weaponStorage];
+					
+				_ret set[_i, [_new,_storage, _weaponStorage]];
+				//_ret set[_i, _new];
+				_i = _i + 1;
+			}forEach (_queryHousingResult);
+		};	
+	};
+};
+_queryResult set [9, _ret];
 [_queryResult,"SOCK_fnc_requestReceived",_ownerID,false] spawn life_fnc_MP;

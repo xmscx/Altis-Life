@@ -80,4 +80,9 @@ switch (_var) do
 	case "license_civ_marijuana": {"Marijuana Training"};
 	case "license_civ_cement": {"Cement Mixing License"};
 	case "license_med_air": {"Pilot License"};
+	
+    //Virtual Inventory Items
+    case "life_inv_storage1": {"House Storage"};
+    case "life_inv_storage2": {"House Storage Large"};
+    case "license_civ_home": {"Home Owner License"};	
 };

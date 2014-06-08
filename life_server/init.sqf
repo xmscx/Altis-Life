@@ -28,6 +28,7 @@ life_animals_array = [];
 
 [] execVM "\life_server\functions.sqf";
 [] execVM "\life_server\eventhandlers.sqf";
+[] execVM "\life_server\initHousing.sqf";
 //[] call compile preProcessFileLineNumbers "\life_server\SHK_pos\shk_pos_init.sqf"; Not currently used
 
 _tempID = ["SERV_onClientDisconnect","onPlayerDisconnected","TON_fnc_clientDisconnect"] call BIS_fnc_addStackedEventHandler;

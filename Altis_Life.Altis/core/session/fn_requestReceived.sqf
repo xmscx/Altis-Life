@@ -55,4 +55,15 @@ switch(playerSide) do {
 	};
 };
 
+switch (playerSide) do
+{
+    case civilian:
+    {
+        // Housing initialization
+        life_houses = _this select 9;
+        life_houses_markers = [];
+    };
+};
+
+
 life_session_completed = true;

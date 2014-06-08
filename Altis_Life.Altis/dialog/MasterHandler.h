@@ -23,3 +23,5 @@
 #include "pInteraction.h"
 #include "deathScreen.h"
 #include "vehicleShop.h"
+#include "trunkHouse.hpp"
+#include "house.hpp"

@@ -147,6 +147,10 @@ class Life_Client_Core
 		class clothing_reb {};
 		class clothing_dive {};
 		class clothing_kart {};
+		
+		//* Added for Housing
+        class houseContainers {};
+        class housePrice {};
 	};
 
 	class Player_Menu
@@ -209,6 +213,10 @@ class Life_Client_Core
 		class onTakeItem {};
 		class fetchVehInfo {};
 		class pushObject {};
+		
+		//* Added for Housing
+		class updateCash {};
+        class vehicleGarage {};
 	};
 	
 	class Network
@@ -280,6 +288,11 @@ class Life_Client_Core
 		class sirenLights {};
 		class licenseCheck {};
 		class licensesRead {};
+		
+		//* Added for Housing
+		class houseOwnerSearch {};
+        class houseInvSearch {};
+        class raidHouse {};
 	};
 	
 	class Gangs
@@ -347,5 +360,33 @@ class Life_Client_Core
 		class bankWithdraw {};
 		class bankTransfer {};
 		class garageLBChange {};
+
+		//* Added for Housing
+		class houseMenu {};	
 	};
+	
+	class Housing
+    {
+        file = "core\housing";
+        class buyHouse {};
+        class sellHouse {}; 
+        class createMarkers {};
+        class deleteMarkers {};
+        class getBuildID {};
+        class initHouses {};
+        class lockHouse {};
+        class lockStorage {};
+        class countBuildingPositions {};
+        class houseStoreItem {};
+        class houseTakeItem {};
+        class houseInventory {};
+        class openStorage {};
+        class placeStorage {};
+        class preCloseHouseStorage {};
+        class calcGarageSpawn {};
+        class onPut {};
+        class onTake {};
+    };
+	
+	
 };
