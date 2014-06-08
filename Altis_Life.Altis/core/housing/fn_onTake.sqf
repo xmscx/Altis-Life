@@ -60,7 +60,7 @@ if(_owner != getPlayerUID _unit && side _unit != west) exitWith {
 	};
 	//waitUntil {!(isNull (findDisplay 602))};
 	_gearDisplay closeDisplay 0;
-	_handle = [] spawn life_fnc_sessionUpdate;
+	_handle = [] spawn SOCK_fnc_sessionUpdate;
 };
 
 if(typeOf _container == "B_supplyCrate_F") then {
@@ -78,4 +78,4 @@ if(typeOf _container == "B_supplyCrate_F") then {
 
 	[[_house, [_wc, _mc, _ic, _bc]],"BRUUUDIS_fnc_updateHouseWeaponStorage",false,false] spawn life_fnc_MP;
 };
-_handle = [] spawn life_fnc_sessionUpdate;
+_handle = [] spawn SOCK_fnc_sessionUpdate;
