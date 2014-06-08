@@ -1,11 +1,12 @@
+
 /*
-	File: fn_houseInventory.sqf
-	Author: Mario2002
-	
-	Description:
-	handles the house inventory 
+File: fn_houseInventory.sqf
+Author: Mario2002
+
+Description:
+handles the house inventory
 */
-private["_house","_tInv","_pInv","_house_data"];
+private["_house","_tInv","_pInv","_house_data","_radius","_houseData"];
 _house = [_this,0,ObjNull,[ObjNull]] call BIS_fnc_param;
 if(isNull _house OR !alive _house) exitWith {closeDialog 0;}; //If null / dead exit menu
 disableSerialization;
@@ -22,18 +23,24 @@ _pInv = (findDisplay 8500) displayCtrl 8503;
 	_alt = _this select 4;
 	switch (_code) do
 	{
-		hint str _code;
-		case 1 : {
-			[] call life_fnc_preCloseHouseStorage;
-		};
+	case 1 : {
+		[] call life_fnc_preCloseHouseStorage;
 	};
+};
+false
 }];
 lbClear _tInv;
 lbClear _pInv;
 _weight = 0;
-_used = (_house getVariable ["Trunk", [[],0]]) select 1;
-_boxes = nearestObjects [position _house, ["Land_Box_AmmoOld_F","B_supplyCrate_F"], 5];
-{	
+_houseData = _house getVariable["Trunk",[[],0]];
+if(count _houseData == 0) then {
+	_used = 0;
+} else {
+	_used = _houseData select 1;
+};
+_radius = (((boundingBoxReal _house select 0) select 2) - ((boundingBoxReal _house select 1) select 2));
+_boxes = nearestObjects [position _house, ["Land_Box_AmmoOld_F","B_supplyCrate_F"], _radius];
+{
 	_box_data = [_x] call life_fnc_vehicleWeight;
 	_weight = _weight + (_box_data select 0);
 	_used = _used + (_box_data select 1);
@@ -60,7 +67,7 @@ if(count _data == 0) then {_house setVariable["Trunk",[[],0],true]; _data = [];}
 			_pInv lbSetData [(lbSize _pInv)-1,_shrt];
 		};
 	}
-		else
+	else
 	{
 		if(life_cash > 0) then
 		{
@@ -83,7 +90,7 @@ if(count _data == 0) then {_house setVariable["Trunk",[[],0],true]; _data = [];}
 			_tInv lbSetData [(lbSize _tInv)-1,_x select 0];
 		};
 	}
-		else
+	else
 	{
 		_val = _x select 1;
 		if(_val > 0) then

@@ -386,6 +386,8 @@ class Life_Client_Core
         class calcGarageSpawn {};
         class onPut {};
         class onTake {};
+		class getBuildingPositions {};
+		class isBuildingPosTaken {};
     };
 	
 	
