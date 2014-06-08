@@ -16,7 +16,7 @@ switch (_side) do
 {	
 	case civilian:
 	{
-		_query = format["SELECT houses.position, houses.storage, houses.weapon_storage FROM houses WHERE pid='%1'",_uid];
+		_query = format["SELECT houses.position, houses.storage, houses.weapon_storage, houses.weapon_storage2 FROM houses WHERE pid='%1'",_uid];
 		diag_log format ["queryPlayerHouses : %1", _query];
 		_sql = "Arma2Net.Unmanaged" callExtension format ["Arma2NETMySQLCommand ['%2', '%1']", _query,(call LIFE_SCHEMA_NAME)];
 		_sql = call compile format["%1", _sql];
@@ -50,9 +50,12 @@ if(isNil {((_sql select 0) select 0)}) then
 				
 				_weaponStorage = [(_x select 2)] call DB_fnc_mresToArray;
 				if(typeName _weaponStorage == "STRING") then {_weaponStorage = call compile format["%1", _weaponStorage];};
+				
+				_weaponStorage2 = [(_x select 3)] call DB_fnc_mresToArray;
+				if(typeName _weaponStorage2 == "STRING") then {_weaponStorage2 = call compile format["%1", _weaponStorage2];};
 				//diag_log format ["_weaponStorage : %1 (%2)", _weaponStorage, typeName _weaponStorage];
 				
-				_ret set[_i, [_new,_storage, _weaponStorage]];
+				_ret set[_i, [_new,_storage, _weaponStorage, _weaponStorage2]];
 				//_ret set[_i, _new];
 				_i = _i + 1;
 			}forEach (_sql select 0);

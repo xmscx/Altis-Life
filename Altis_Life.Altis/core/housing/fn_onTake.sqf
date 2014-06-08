@@ -63,7 +63,7 @@ if(_owner != getPlayerUID _unit && side _unit != west) exitWith {
 	_handle = [] spawn SOCK_fnc_updateRequest;
 };
 
-if(typeOf _container == "B_supplyCrate_F") then {
+if(typeOf _container in ["B_supplyCrate_F","Land_Box_AmmoOld_F"]) then {
 	
 	_wc = getWeaponCargo _container;
 	_mc = getMagazineCargo _container;
@@ -76,6 +76,6 @@ if(typeOf _container == "B_supplyCrate_F") then {
 	
 	//sleep 0.5;
 
-	[[_house, [_wc, _mc, _ic, _bc]],"BRUUUDIS_fnc_updateHouseWeaponStorage",false,false] spawn life_fnc_MP;
+	[[_house, typeOf _container, [_wc, _mc, _ic, _bc]],"BRUUUDIS_fnc_updateHouseWeaponStorage",false,false] spawn life_fnc_MP;
 };
 _handle = [] spawn SOCK_fnc_updateRequest;

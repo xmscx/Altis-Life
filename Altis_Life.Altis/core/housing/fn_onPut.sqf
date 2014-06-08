@@ -18,7 +18,7 @@ if(_owner == "") exitWith {
 	_handle = [] spawn SOCK_fnc_updateRequest;
 };
 
-if(typeOf _container == "B_supplyCrate_F") then {
+if(typeOf _container in ["B_supplyCrate_F","Land_Box_AmmoOld_F"]) then {
 	_wc = getWeaponCargo _container;
 	_mc = getMagazineCargo _container;
 	_ic = getItemCargo _container;
@@ -26,6 +26,6 @@ if(typeOf _container == "B_supplyCrate_F") then {
 
 	//hint format ["put %1 %2 %3 %4 %5 %6 %7", _unit, _wc, _mc, _ic, _bc, _item, _owner];	
 	//sleep 0.5;
-	[[_house, [_wc, _mc, _ic, _bc]],"BRUUUDIS_fnc_updateHouseWeaponStorage",false,false] spawn life_fnc_MP;
+	[[_house, typeOf _container,[_wc, _mc, _ic, _bc]],"BRUUUDIS_fnc_updateHouseWeaponStorage",false,false] spawn life_fnc_MP;
 };
 _handle = [] spawn SOCK_fnc_updateRequest;
