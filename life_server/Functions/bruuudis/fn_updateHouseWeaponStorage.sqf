@@ -30,7 +30,7 @@ switch (_side) do
 				_query = format["UPDATE houses SET weapon_storage='%1' WHERE house_id = '%2'", _data, _houseId];
 			};
 		};
-		diag_log format ["query: %1 - Container: %2", _query,_container];
+		//diag_log format ["query: %1 - Container: %2", _query,_container];
 	};
 };
 waitUntil {!DB_Async_Active};
