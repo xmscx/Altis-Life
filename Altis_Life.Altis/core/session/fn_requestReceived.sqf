@@ -51,6 +51,7 @@ switch(playerSide) do {
 	};
 	
 	case independent: {
+		__CONST__(life_coplevel,0);
 		__CONST__(life_medicLevel,parseNumber(_this select 7));
 	};
 };
