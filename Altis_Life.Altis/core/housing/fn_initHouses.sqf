@@ -14,7 +14,6 @@
 for "_i" from 1 to (count life_houses) do
 {
 	_house = nearestObject [((life_houses select (_i-1)) select 0), "House_F"];
-	diag_log format["House %1",_house];
 	_marker = createMarkerLocal [format["house_%1", _i], ((life_houses select (_i-1)) select 0)];
 	_container1 = ((life_houses select (_i-1)) select 2);
 	_container2 = ((life_houses select (_i-1)) select 3);
