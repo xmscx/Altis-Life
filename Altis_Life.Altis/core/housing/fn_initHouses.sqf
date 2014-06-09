@@ -14,15 +14,14 @@
 for "_i" from 1 to (count life_houses) do
 {
 	_house = nearestObject [((life_houses select (_i-1)) select 0), "House_F"];
+	diag_log format["House %1",_house];
 	_marker = createMarkerLocal [format["house_%1", _i], ((life_houses select (_i-1)) select 0)];
 	_container1 = ((life_houses select (_i-1)) select 2);
 	_container2 = ((life_houses select (_i-1)) select 3);
-	//diag_log format ["cargo : %1", _cargo];
 	_marker setMarkerTextLocal getText(configFile >> "CfgVehicles" >> (typeOf _house) >> "displayName");
 	_marker setMarkerShapeLocal "ICON";
 	_marker setMarkerColorLocal "ColorBlue";
 	_marker setMarkerTypeLocal "mil_end";	
-	//diag_log format ["house : %1", _house];
 	_positions = [_house] call life_fnc_getBuildingPositions;
 	_containers = _house getVariable ["containers", []];
 	_weaponsAdded = false;
@@ -30,7 +29,9 @@ for "_i" from 1 to (count life_houses) do
 	if(count _containers > 0) then {
 		{
 			_pos = [0,0,0];
-			{if(!([_x] call life_fnc_isBuildingPosTaken)) exitWith {_pos = _x;};} foreach _positions;
+			{
+				if(!([_x] call life_fnc_isBuildingPosTaken)) exitWith {_pos = _x;};
+			} foreach _positions;
 			_box = (_x select 2) createVehicle _pos;
 			_box setPosATL _pos;
 			_box setVariable["storage", (_x select 3), true];
@@ -44,12 +45,14 @@ for "_i" from 1 to (count life_houses) do
 			clearBackpackCargoGlobal _box;
 			
 			if(typeOf _box in ["B_supplyCrate_F","Land_Box_AmmoOld_F"]) then {
+				_cargo = [];
+				_leer = [];
 				switch (typeOf _box) do {
 					case "Land_Box_AmmoOld_F": {_cargo = _container2;};
 					case "B_supplyCrate_F": {_cargo = _container1;};
 					default {_cargo = _container1;};
 				};
-				if (!(isNil "_cargo")) then {
+				if (!(isNil "_cargo") AND !([_cargo,_leer] call BIS_fnc_areEqual)) then {
 					//diag_log format ["%1", _cargo];
 						
 					if(count (_cargo select 0) > 0) then {
