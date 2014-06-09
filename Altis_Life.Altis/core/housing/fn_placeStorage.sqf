@@ -51,12 +51,16 @@ clearMagazineCargoGlobal _box;
 clearItemCargoGlobal _box;
 clearBackpackCargoGlobal _box;
 
+
+
 _houseId = [_house] call life_fnc_getBuildID;
 _containerId = format ["%1_%2", _houseId, _count];
 _storageData = [_containerId, _item, typeOf _box];
 _containers set [count _containers, _storageData];
 _house setVariable ["containers", _containers, true];
 _box setVariable["owner", getPlayerUID player, true];
+_box setVehicleInit "this allow Damage false; this enableSimulation false;";
+_box processInitCommands;
 hint "Placing storage container...";
 
 [false,_item,1] call life_fnc_handleInv;
