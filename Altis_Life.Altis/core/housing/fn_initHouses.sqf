@@ -15,8 +15,8 @@ for "_i" from 1 to (count life_houses) do
 {
 	_house = nearestObject [((life_houses select (_i-1)) select 0), "House_F"];
 	_marker = createMarkerLocal [format["house_%1", _i], ((life_houses select (_i-1)) select 0)];
-	_cargo = ((life_houses select (_i-1)) select 2);
-	_cargo2 = ((life_houses select (_i-1)) select 3);
+	_container1 = ((life_houses select (_i-1)) select 2);
+	_container2 = ((life_houses select (_i-1)) select 3);
 	//diag_log format ["cargo : %1", _cargo];
 	_marker setMarkerTextLocal getText(configFile >> "CfgVehicles" >> (typeOf _house) >> "displayName");
 	_marker setMarkerShapeLocal "ICON";
@@ -28,11 +28,9 @@ for "_i" from 1 to (count life_houses) do
 	_weaponsAdded = false;
 	
 	if(count _containers > 0) then {
-		_pos = [0,0,0];
 		{
-			if(!([_x] call life_fnc_isBuildingPosTaken)) exitWith {_pos = _x;};	
-		} foreach _positions;
-		{
+			_pos = [0,0,0];
+			{if(!([_x] call life_fnc_isBuildingPosTaken)) exitWith {_pos = _x;};} foreach _positions;
 			_box = (_x select 2) createVehicle _pos;
 			_box setPosATL _pos;
 			_box setVariable["storage", (_x select 3), true];
@@ -45,11 +43,14 @@ for "_i" from 1 to (count life_houses) do
 			clearItemCargoGlobal _box;
 			clearBackpackCargoGlobal _box;
 			
-			if(typeOf _box in ["B_supplyCrate_F","Land_Box_AmmoOld_F"] && !(_weaponsAdded)) then {
-				if (typeOf _box == "Land_Box_AmmoOld_F") then 
-				{
-					_cargo = _cargo2;
+			if(typeOf _box in ["B_supplyCrate_F","Land_Box_AmmoOld_F"]) then {
+				_cargo = _container2;
+				switch (typeOf _box) do {
+					case "Land_Box_AmmoOld_F": {_cargo = _container2;};
+					case "B_supplyCrate_F": {_cargo = _container1;};
+					default {_cargo = _container1;};
 				};
+				
 				//diag_log format ["%1", _cargo];
 					
 				if(count (_cargo select 0) > 0) then {
@@ -71,9 +72,7 @@ for "_i" from 1 to (count life_houses) do
 					for[{_j = 0},{_j < count ((_cargo select 3) select 0)},{_j = _j + 1}] do {
 						_box addBackpackCargoGlobal [((_cargo select 3) select 0) select _j, ((_cargo select 3) select 1) select _j];
 					};
-				};				
-		
-				_weaponsAdded = true;
+				};
 			};
 		}forEach _containers;
 	};	
