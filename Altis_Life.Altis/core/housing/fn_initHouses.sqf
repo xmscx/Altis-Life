@@ -36,8 +36,8 @@ for "_i" from 1 to (count life_houses) do
 			_box setVariable["storage", (_x select 3), true];
 			_box setVariable["Trunk", [[],0], true];
 			_box setVariable["owner", getPlayerUID player, true];
-			_box setVehicleInit "this allow Damage false; this enableSimulation false;";
-			_box processInitCommands;
+			
+			
 			clearWeaponCargoGlobal _box; 
 			clearMagazineCargoGlobal _box;
 			clearItemCargoGlobal _box;
