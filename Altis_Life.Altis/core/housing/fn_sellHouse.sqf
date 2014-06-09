@@ -65,5 +65,5 @@ _boxes = nearestObjects [position _house, ["Land_Box_AmmoOld_F","B_supplyCrate_F
 }forEach _boxes;
 	
 [[_buildingID, position _house],"BRUUUDIS_fnc_deleteHouse",false,false] spawn BIS_fnc_MP;
-[] call life_fnc_sessionUpdate;
+_handle = [] spawn SOCK_fnc_updateRequest;
 

@@ -40,5 +40,7 @@ life_houses set [count life_houses, [position _house, _uid, []]];
 [] call life_fnc_createMarkers;
 		
 [[_buildingID, _uid, [], position _house],"BRUUUDIS_fnc_insertHouse",false,false] spawn BIS_fnc_MP;
-[] call life_fnc_sessionUpdate;
+_handle = [] spawn SOCK_fnc_updateRequest;
+
+
 

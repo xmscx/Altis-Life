@@ -57,10 +57,11 @@ _storageData = [_containerId, _item, typeOf _box];
 _containers set [count _containers, _storageData];
 _house setVariable ["containers", _containers, true];
 _box setVariable["owner", getPlayerUID player, true];
+_box allowDamage false;
 hint "Placing storage container...";
 
 [false,_item,1] call life_fnc_handleInv;
-_handle = [] spawn life_fnc_sessionUpdate;
+_handle = [] spawn SOCK_fnc_updateRequest;
 //sleep 0.5;
 
 [[_house, _containers, playerSide, [[],0]],"BRUUUDIS_fnc_updateHouseStorage",false,false] spawn life_fnc_MP;
