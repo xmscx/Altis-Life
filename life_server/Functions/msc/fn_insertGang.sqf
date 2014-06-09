@@ -8,7 +8,7 @@
 private["_uid","_name","_query","_sql","_leaderid","_atmcash"];
 _name = [_this,0,"",[""]] call BIS_fnc_param;
 _leaderid = [_this,1,"",[""]] call BIS_fnc_param;
-_locked = false;
+_locked = 0;
 
 
 _atmcash = 0;

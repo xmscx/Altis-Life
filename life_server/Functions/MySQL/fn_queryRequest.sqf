@@ -101,7 +101,12 @@ switch (_side) do {
 			if(!isNil "_queryResult") exitWith {};
 		};
 		missionNamespace setVariable[format["QUERY_%1",_uid],nil]; //Unset the variable.
-		_queryResult set[10, _queryGangResult];
+		if (typeName _queryGangResult != "STRING") then {
+			_old = _queryGangResult select 3;
+			_new = [parseNumber(_old), 1] call DB_fnc_bool;
+			_queryGangResult set [3, _new];
+			_queryResult set[10, _queryGangResult];
+		};
 	};	
 };
 //* diag_log format["got Player Housing Information: Return: %1",_ret];

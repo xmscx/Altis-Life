@@ -91,12 +91,7 @@ switch (playerSide) do
 				_gangname = (_gangresult select 2);
 				_locked = (_gangresult select 3);
 				_rank = (_gangresult select 4);
-				if (_locked == "false") then {
-					_lockedbool = false;
-				} else {
-					_lockedbool = true;
-				};
-				diag_log format ["Found Gang: %1 - locked: %2 - %3 - %4",_gangname, _locked, typeName _locked, _lockedbool];
+				diag_log format ["Found Gang: %1 - locked: %2 - %3",_gangname, _locked, typeName _locked];
 				// Join da Group
 				diag_log "Get Group id from life_gang_list";
 				_index = [_gangname,life_gang_list] call fnc_index;
@@ -125,7 +120,7 @@ switch (playerSide) do
 					};
 
 					life_gang_list = [life_gang_list, _index] call BIS_fnc_removeIndex;
-					life_gang_list set[count life_gang_list,[_gangname,_group,_lockedbool,_strplayer,_leaderid]];
+					life_gang_list set[count life_gang_list,[_gangname,_group,_locked,_strplayer,_leaderid]];
 					publicVariable "life_gang_list";
 				};	
 			};

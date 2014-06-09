@@ -20,7 +20,7 @@ else
 		_name = (_x select 0);
 		_atmCash = (_x select 1);
 		_leaderid = (_x select 2);
-		_locked = (_x select 3);
+		_locked =  [parseNumber(_x select 3), 1] call DB_fnc_bool;
 		_leadername = (_x select 4);
 		_group = objNull;
 		life_gang_list set[count life_gang_list,[_name, _group, _locked, "", _leaderid]];
