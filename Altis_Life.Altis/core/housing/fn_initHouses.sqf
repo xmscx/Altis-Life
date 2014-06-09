@@ -44,33 +44,33 @@ for "_i" from 1 to (count life_houses) do
 			clearBackpackCargoGlobal _box;
 			
 			if(typeOf _box in ["B_supplyCrate_F","Land_Box_AmmoOld_F"]) then {
-				_cargo = _container2;
 				switch (typeOf _box) do {
 					case "Land_Box_AmmoOld_F": {_cargo = _container2;};
 					case "B_supplyCrate_F": {_cargo = _container1;};
 					default {_cargo = _container1;};
 				};
-				
-				//diag_log format ["%1", _cargo];
-					
-				if(count (_cargo select 0) > 0) then {
-					for[{_j = 0},{_j < count ((_cargo select 0) select 0)},{_j = _j + 1}] do {
-						_box addWeaponCargoGlobal [((_cargo select 0) select 0) select _j, ((_cargo select 0) select 1) select _j];
+				if (!(isNil "_cargo")) then {
+					//diag_log format ["%1", _cargo];
+						
+					if(count (_cargo select 0) > 0) then {
+						for[{_j = 0},{_j < count ((_cargo select 0) select 0)},{_j = _j + 1}] do {
+							_box addWeaponCargoGlobal [((_cargo select 0) select 0) select _j, ((_cargo select 0) select 1) select _j];
+						};
 					};
-				};
-				if(count (_cargo select 1) > 0) then {
-					for[{_j = 0},{_j < count ((_cargo select 1) select 0)},{_j = _j + 1}] do {
-						_box addMagazineCargoGlobal [((_cargo select 1) select 0) select _j, ((_cargo select 1) select 1) select _j];
+					if(count (_cargo select 1) > 0) then {
+						for[{_j = 0},{_j < count ((_cargo select 1) select 0)},{_j = _j + 1}] do {
+							_box addMagazineCargoGlobal [((_cargo select 1) select 0) select _j, ((_cargo select 1) select 1) select _j];
+						};
 					};
-				};
-				if(count (_cargo select 2) > 0) then {
-					for[{_j = 0},{_j < count ((_cargo select 2) select 0)},{_j = _j + 1}] do {
-						_box addItemCargoGlobal [((_cargo select 2) select 0) select _j, ((_cargo select 2) select 1) select _j];
+					if(count (_cargo select 2) > 0) then {
+						for[{_j = 0},{_j < count ((_cargo select 2) select 0)},{_j = _j + 1}] do {
+							_box addItemCargoGlobal [((_cargo select 2) select 0) select _j, ((_cargo select 2) select 1) select _j];
+						};
 					};
-				};
-				if(count (_cargo select 3) > 0) then {
-					for[{_j = 0},{_j < count ((_cargo select 3) select 0)},{_j = _j + 1}] do {
-						_box addBackpackCargoGlobal [((_cargo select 3) select 0) select _j, ((_cargo select 3) select 1) select _j];
+					if(count (_cargo select 3) > 0) then {
+						for[{_j = 0},{_j < count ((_cargo select 3) select 0)},{_j = _j + 1}] do {
+							_box addBackpackCargoGlobal [((_cargo select 3) select 0) select _j, ((_cargo select 3) select 1) select _j];
+						};
 					};
 				};
 			};
