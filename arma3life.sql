@@ -104,3 +104,21 @@ CREATE TABLE IF NOT EXISTS `houses` (
   KEY `pid` (`pid`),
   KEY `house_id` (`house_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+
+
+
+CREATE TABLE IF NOT EXISTS `gangs` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `gangname` varchar(30) NOT NULL,
+  `atmCash` varchar(2048) NOT NULL,
+  `locked` varchar(2048) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`gangname`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+CREATE TABLE IF NOT EXISTS `gang_players` (
+  `gangid` int(11) NOT NULL,
+  `playerid` varchar(2048) NOT NULL,
+  `rank` int(11) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
