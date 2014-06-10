@@ -1,0 +1,1 @@
+ALTER TABLE `houses` ADD `weapon_storage2` VARCHAR(4096) NOT NULL AFTER `weapon_storage`;
